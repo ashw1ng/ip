@@ -9,13 +9,22 @@ public class UrMum {
         System.out.println(welcome);
 
         Scanner scanner = new Scanner(System.in);
+        String[] messages = new String[100];
+        int msgCount = 0;
+
         while (true) {
             String input = scanner.nextLine();
             if (input.equals("bye")) {
                 System.out.println(goodbye);
                 break;
+            } else if (input.equals("list")) {
+                for (int i = 0; i < msgCount; i++) {
+                    System.out.println((i + 1) + ". " + messages[i]);
+                }
             } else {
-                System.out.println(" " + input);
+                messages[msgCount] = input;
+                msgCount++;
+                System.out.println("added: " + input);
             }
         }
         scanner.close();        
