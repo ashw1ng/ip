@@ -47,9 +47,33 @@ public class UrMum {
                 } catch (NumberFormatException e) {
                     System.out.println(" Please enter a valid task number.");
                 }
-            } else {
-                tasks[taskCount] = input;
+            } else if (input.startsWith("todo ")) {
+                String desc = input.substring(5).trim();
+                tasks[taskCount] = new Todo(desc);
                 taskCount++;
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount - 1]);
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+            } else if (input.startsWith("deadline ")) {
+                String[] parts = input.substring(9).split(" /by ", 2);
+                String desc = parts[0].trim();
+                String by = parts.length > 1 ? parts[1].trim() : "";
+                tasks[taskCount] = new Deadline(desc, by);
+                taskCount++;
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount - 1]);
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+            } else if (input.startsWith("event ")) {
+                String[] parts = input.substring(6).split(" /from | /to ", 3);
+                String desc = parts[0].trim();
+                String from = parts.length > 1 ? parts[1].trim() : "";
+                String to = parts.length > 2 ? parts[2].trim() : "";
+                tasks[taskCount] = new Event(desc, from, to);
+                taskCount++;
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount - 1]);
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+            } else {
                 System.out.println("added: " + input);
             }
         }
