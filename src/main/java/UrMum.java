@@ -8,6 +8,22 @@ public class UrMum {
         System.out.println(greeting);
         System.out.println(line);
         System.out.println(farewell);
-        System.out.println(line);        
+        System.out.println(line);
+
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            String input = scanner.nextLine();
+            if (input.equals("bye")) {
+                System.out.println(line);
+                System.out.println(farewell);
+                System.out.println(line);
+                break;
+            } else {
+                System.out.println(line);
+                System.out.println(" " + input);
+                System.out.println(line);
+            }
+        }
+        scanner.close();        
     }
 }
