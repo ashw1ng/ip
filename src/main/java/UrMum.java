@@ -1,12 +1,4 @@
 import java.util.Scanner;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class UrMum {
@@ -21,7 +13,8 @@ public class UrMum {
 
         Scanner scanner = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<>();
-        loadTasks(tasks);
+        Storage storage = new Storage(DATA_DIR, DATA_FILE);
+        storage.loadTasks(tasks);
 
         while (true) {
             String input = scanner.nextLine();
@@ -40,7 +33,7 @@ public class UrMum {
                         tasks.get(idx).markAsDone();
                         System.out.println(" Nice! I've marked this task as done:");
                         System.out.println("   " + tasks.get(idx));
-                        saveTasks(tasks);
+                        storage.saveTasks(tasks);
                     } else {
                         throw new DukeException("That task number doesn't exist. Please try again.");
                     }
@@ -50,7 +43,7 @@ public class UrMum {
                         tasks.get(idx).markAsNotDone();
                         System.out.println(" OK, I've marked this task as not done yet:");
                         System.out.println("   " + tasks.get(idx));
-                        saveTasks(tasks);
+                        storage.saveTasks(tasks);
                     } else {
                         throw new DukeException("That task number doesn't exist. Please try again.");
                     }
@@ -61,7 +54,7 @@ public class UrMum {
                         System.out.println(" Noted. I've removed this task:");
                         System.out.println("   " + removed);
                         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                        saveTasks(tasks);
+                        storage.saveTasks(tasks);
                     } else {
                         throw new DukeException("That task number doesn't exist. Please try again.");
                     }
@@ -74,7 +67,7 @@ public class UrMum {
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("   " + tasks.get(tasks.size() - 1));
                     System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                    saveTasks(tasks);
+                    storage.saveTasks(tasks);
                 } else if (input.startsWith("deadline ")) {
                     String[] parts = input.substring(9).split(" /by ", 2);
                     String desc = parts[0].trim();
@@ -89,7 +82,7 @@ public class UrMum {
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("   " + tasks.get(tasks.size() - 1));
                     System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                    saveTasks(tasks);
+                    storage.saveTasks(tasks);
                 } else if (input.startsWith("event ")) {
                     String[] parts = input.substring(5).split(" /from ", 2);
                     String desc = parts[0].trim();
@@ -112,7 +105,7 @@ public class UrMum {
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("   " + tasks.get(tasks.size() - 1));
                     System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                    saveTasks(tasks);
+                    storage.saveTasks(tasks);
                 } else {
                     throw new DukeException("Sorry, I don't know what that means. Try another command!");
                 }
@@ -123,88 +116,5 @@ public class UrMum {
             }
         }
         scanner.close();        
-    }
-
-    private static void saveTasks(ArrayList<Task> tasks) {
-        try {
-            Path dirPath = Paths.get(DATA_DIR);
-            if (!Files.exists(dirPath)) {
-                Files.createDirectories(dirPath);
-            }
-            BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_FILE));
-            for (Task t : tasks) {
-                writer.write(taskToFileString(t));
-                writer.newLine();
-            }
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Error saving tasks: " + e.getMessage());
-        }
-    }
-
-    private static void loadTasks(ArrayList<Task> tasks) {
-        Path filePath = Paths.get(DATA_FILE);
-        if (!Files.exists(filePath)) {
-            return; // No file to load
-        }
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(DATA_FILE));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                try {
-                    Task t = parseTask(line);
-                    if (t != null) {
-                        tasks.add(t);
-                    }
-                } catch (Exception e) {
-                    System.out.println("Warning: Skipping corrupted line: " + line);
-                }
-            }
-            reader.close();
-        } catch (IOException e) {
-            System.out.println("Error loading tasks: " + e.getMessage());
-        }
-    }
-
-    private static String taskToFileString(Task t) {
-        String type = t instanceof Todo ? "T" : t instanceof Deadline ? "D" : t instanceof Event ? "E" : "?";
-        String done = t.isDone ? "1" : "0";
-        if (t instanceof Todo) {
-            return String.join(" | ", type, done, t.description);
-        } else if (t instanceof Deadline) {
-            return String.join(" | ", type, done, t.description, ((Deadline) t).by);
-        } else if (t instanceof Event) {
-            return String.join(" | ", type, done, t.description, ((Event) t).from + " to " + ((Event) t).to);
-        }
-        return "";
-    }
-
-    private static Task parseTask(String line) {
-        String[] parts = line.split(" \\| ");
-        if (parts.length < 3) return null;
-        String type = parts[0];
-        boolean isDone = parts[1].equals("1");
-        String desc = parts[2];
-        switch (type) {
-            case "T":
-                Task t = new Todo(desc);
-                if (isDone) t.markAsDone();
-                return t;
-            case "D":
-                if (parts.length < 4) return null;
-                Task d = new Deadline(desc, parts[3]);
-                if (isDone) d.markAsDone();
-                return d;
-            case "E":
-                if (parts.length < 4) return null;
-                String[] fromTo = parts[3].split(" to ", 2);
-                String from = fromTo.length > 0 ? fromTo[0] : "";
-                String to = fromTo.length > 1 ? fromTo[1] : "";
-                Task e = new Event(desc, from, to);
-                if (isDone) e.markAsDone();
-                return e;
-            default:
-                return null;
-        }
     }
 }
