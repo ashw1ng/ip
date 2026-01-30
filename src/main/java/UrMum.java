@@ -1,4 +1,12 @@
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class UrMum {
@@ -37,6 +45,16 @@ public class UrMum {
                         tasks.get(idx).markAsNotDone();
                         System.out.println(" OK, I've marked this task as not done yet:");
                         System.out.println("   " + tasks.get(idx));
+                    } else {
+                        throw new DukeException("That task number doesn't exist. Please try again.");
+                    }
+                } else if (input.startsWith("delete ")) {
+                    int idx = Integer.parseInt(input.substring(7).trim()) - 1;
+                    if (idx >= 0 && idx < tasks.size()) {
+                        Task removed = tasks.remove(idx);
+                        System.out.println(" Noted. I've removed this task:");
+                        System.out.println("   " + removed);
+                        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                     } else {
                         throw new DukeException("That task number doesn't exist. Please try again.");
                     }
