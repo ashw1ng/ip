@@ -115,6 +115,6 @@ public class UrMum {
                 System.out.println("Please enter a valid task number.");
             }
         }
-        scanner.close();        
+        scanner.close();
     }
 }
