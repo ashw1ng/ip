@@ -76,7 +76,7 @@ public class UrMum {
                         throw new UrmumException("Please provide a description for the deadline.");
                     }
                     if (by.isEmpty()) {
-                        throw new UrmumException("Please specify a /by date for the deadline.");
+                        throw new UrmumException("Please specify a /by date and time for the deadline.");
                     }
                     try {
                         tasks.add(new Deadline(desc, by));
@@ -85,7 +85,7 @@ public class UrMum {
                         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                         storage.saveTasks(tasks);
                     } catch (Exception e) {
-                        throw new UrmumException("Please enter the date in yyyy-MM-dd format, e.g., 2019-12-02");
+                        throw new UrmumException("Please enter the date and time in yyyy-MM-dd HHmm format, e.g., 2019-12-02 1800");
                     }
                 } else if (input.startsWith("event ")) {
                     String[] parts = input.substring(5).split(" /from ", 2);
