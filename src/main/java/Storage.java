@@ -65,7 +65,7 @@ public class Storage {
         if (t instanceof Todo) {
             return String.join(" | ", type, done, t.description);
         } else if (t instanceof Deadline) {
-            return String.join(" | ", type, done, t.description, ((Deadline) t).by);
+            return String.join(" | ", type, done, t.description, ((Deadline) t).by.toString());
         } else if (t instanceof Event) {
             return String.join(" | ", type, done, t.description, ((Event) t).from + " to " + ((Event) t).to);
         }

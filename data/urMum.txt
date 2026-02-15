@@ -1,5 +1,2 @@
-T | 0 | borrow book
-T | 0 | something
-T | 0 | something
-T | 0 | something
-T | 0 | something important
+T | 0 | read
+D | 0 | return book | 2019-12-02

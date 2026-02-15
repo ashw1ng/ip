@@ -1,5 +1,5 @@
-class DukeException extends Exception {
-    public DukeException(String message) {
+class UrmumException extends Exception {
+    public UrmumException(String message) {
         super(message);
     }
 }

@@ -35,7 +35,7 @@ public class UrMum {
                         System.out.println("   " + tasks.get(idx));
                         storage.saveTasks(tasks);
                     } else {
-                        throw new DukeException("That task number doesn't exist. Please try again.");
+                        throw new UrmumException("That task number doesn't exist. Please try again.");
                     }
                 } else if (input.startsWith("unmark ")) {
                     int idx = Integer.parseInt(input.substring(7)) - 1;
@@ -45,7 +45,7 @@ public class UrMum {
                         System.out.println("   " + tasks.get(idx));
                         storage.saveTasks(tasks);
                     } else {
-                        throw new DukeException("That task number doesn't exist. Please try again.");
+                        throw new UrmumException("That task number doesn't exist. Please try again.");
                     }
                 } else if (input.startsWith("delete ")) {
                     int idx = Integer.parseInt(input.substring(7).trim()) - 1;
@@ -56,12 +56,12 @@ public class UrMum {
                         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                         storage.saveTasks(tasks);
                     } else {
-                        throw new DukeException("That task number doesn't exist. Please try again.");
+                        throw new UrmumException("That task number doesn't exist. Please try again.");
                     }
                 } else if (input.startsWith("todo ")) {
                     String desc = input.length() > 4 ? input.substring(5).trim() : "";
                     if (desc.isEmpty()) {
-                        throw new DukeException("Oops! You need to provide a description for a todo.");
+                        throw new UrmumException("Oops! You need to provide a description for a todo.");
                     }
                     tasks.add(new Todo(desc));
                     System.out.println(" Got it. I've added this task:");
@@ -73,16 +73,20 @@ public class UrMum {
                     String desc = parts[0].trim();
                     String by = parts.length > 1 ? parts[1].trim() : "";
                     if (desc.isEmpty()) {
-                        throw new DukeException("Please provide a description for the deadline.");
+                        throw new UrmumException("Please provide a description for the deadline.");
                     }
                     if (by.isEmpty()) {
-                        throw new DukeException("Please specify a /by time for the deadline.");
+                        throw new UrmumException("Please specify a /by date for the deadline.");
                     }
-                    tasks.add(new Deadline(desc, by));
-                    System.out.println(" Got it. I've added this task:");
-                    System.out.println("   " + tasks.get(tasks.size() - 1));
-                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                    storage.saveTasks(tasks);
+                    try {
+                        tasks.add(new Deadline(desc, by));
+                        System.out.println(" Got it. I've added this task:");
+                        System.out.println("   " + tasks.get(tasks.size() - 1));
+                        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                        storage.saveTasks(tasks);
+                    } catch (Exception e) {
+                        throw new UrmumException("Please enter the date in yyyy-MM-dd format, e.g., 2019-12-02");
+                    }
                 } else if (input.startsWith("event ")) {
                     String[] parts = input.substring(5).split(" /from ", 2);
                     String desc = parts[0].trim();
@@ -96,10 +100,10 @@ public class UrMum {
                         }
                     }
                     if (desc.isEmpty()) {
-                        throw new DukeException("Please provide a description for the event.");
+                        throw new UrmumException("Please provide a description for the event.");
                     }
                     if (from.isEmpty() || to.isEmpty()) {
-                        throw new DukeException("Please specify both /from and /to times for the event.");
+                        throw new UrmumException("Please specify both /from and /to times for the event.");
                     }
                     tasks.add(new Event(desc, from, to));
                     System.out.println(" Got it. I've added this task:");
@@ -107,9 +111,9 @@ public class UrMum {
                     System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                     storage.saveTasks(tasks);
                 } else {
-                    throw new DukeException("Sorry, I don't know what that means. Try another command!");
+                    throw new UrmumException("Sorry, I don't know what that means. Try another command!");
                 }
-            } catch (DukeException e) {
+            } catch (UrmumException e) {
                 System.out.println(e.getMessage());
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a valid task number.");
