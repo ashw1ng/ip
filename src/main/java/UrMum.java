@@ -12,9 +12,9 @@ public class UrMum {
         System.out.println(welcome);
 
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
+        TaskList tasks = new TaskList();
         Storage storage = new Storage(DATA_DIR, DATA_FILE);
-        storage.loadTasks(tasks);
+        storage.loadTasks(tasks.getTasks());
 
         while (true) {
             String input = scanner.nextLine();
@@ -25,36 +25,37 @@ public class UrMum {
                 } else if (input.equals("list")) {
                     System.out.println(" Here are the tasks in your list:");
                     for (int i = 0; i < tasks.size(); i++) {
-                        System.out.println(" " + (i + 1) + "." + tasks.get(i));
+                        System.out.println(" " + (i + 1) + "." + tasks.getTask(i));
                     }
                 } else if (input.startsWith("mark ")) {
                     int idx = Integer.parseInt(input.substring(5)) - 1;
                     if (idx >= 0 && idx < tasks.size()) {
-                        tasks.get(idx).markAsDone();
+                        tasks.getTask(idx).markAsDone();
                         System.out.println(" Nice! I've marked this task as done:");
-                        System.out.println("   " + tasks.get(idx));
-                        storage.saveTasks(tasks);
+                        System.out.println("   " + tasks.getTask(idx));
+                        storage.saveTasks(tasks.getTasks());
                     } else {
                         throw new UrmumException("That task number doesn't exist. Please try again.");
                     }
                 } else if (input.startsWith("unmark ")) {
                     int idx = Integer.parseInt(input.substring(7)) - 1;
                     if (idx >= 0 && idx < tasks.size()) {
-                        tasks.get(idx).markAsNotDone();
+                        tasks.getTask(idx).markAsNotDone();
                         System.out.println(" OK, I've marked this task as not done yet:");
-                        System.out.println("   " + tasks.get(idx));
-                        storage.saveTasks(tasks);
+                        System.out.println("   " + tasks.getTask(idx));
+                        storage.saveTasks(tasks.getTasks());
                     } else {
                         throw new UrmumException("That task number doesn't exist. Please try again.");
                     }
                 } else if (input.startsWith("delete ")) {
                     int idx = Integer.parseInt(input.substring(7).trim()) - 1;
                     if (idx >= 0 && idx < tasks.size()) {
-                        Task removed = tasks.remove(idx);
+                        Task removed = tasks.getTask(idx);
+                        tasks.removeTask(idx);
                         System.out.println(" Noted. I've removed this task:");
                         System.out.println("   " + removed);
                         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                        storage.saveTasks(tasks);
+                        storage.saveTasks(tasks.getTasks());
                     } else {
                         throw new UrmumException("That task number doesn't exist. Please try again.");
                     }
@@ -63,11 +64,11 @@ public class UrMum {
                     if (desc.isEmpty()) {
                         throw new UrmumException("Oops! You need to provide a description for a todo.");
                     }
-                    tasks.add(new Todo(desc));
+                    tasks.addTask(new Todo(desc));
                     System.out.println(" Got it. I've added this task:");
-                    System.out.println("   " + tasks.get(tasks.size() - 1));
+                    System.out.println("   " + tasks.getTask(tasks.size() - 1));
                     System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                    storage.saveTasks(tasks);
+                    storage.saveTasks(tasks.getTasks());
                 } else if (input.startsWith("deadline ")) {
                     String[] parts = input.substring(9).split(" /by ", 2);
                     String desc = parts[0].trim();
@@ -79,11 +80,11 @@ public class UrMum {
                         throw new UrmumException("Please specify a /by date and time for the deadline.");
                     }
                     try {
-                        tasks.add(new Deadline(desc, by));
+                        tasks.addTask(new Deadline(desc, by));
                         System.out.println(" Got it. I've added this task:");
-                        System.out.println("   " + tasks.get(tasks.size() - 1));
+                        System.out.println("   " + tasks.getTask(tasks.size() - 1));
                         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                        storage.saveTasks(tasks);
+                        storage.saveTasks(tasks.getTasks());
                     } catch (Exception e) {
                         throw new UrmumException("Please enter the date and time in yyyy-MM-dd HHmm format, e.g., 2019-12-02 1800");
                     }
@@ -105,11 +106,11 @@ public class UrMum {
                     if (from.isEmpty() || to.isEmpty()) {
                         throw new UrmumException("Please specify both /from and /to times for the event.");
                     }
-                    tasks.add(new Event(desc, from, to));
+                    tasks.addTask(new Event(desc, from, to));
                     System.out.println(" Got it. I've added this task:");
-                    System.out.println("   " + tasks.get(tasks.size() - 1));
+                    System.out.println("   " + tasks.getTask(tasks.size() - 1));
                     System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                    storage.saveTasks(tasks);
+                    storage.saveTasks(tasks.getTasks());
                 } else {
                     throw new UrmumException("Sorry, I don't know what that means. Try another command!");
                 }
