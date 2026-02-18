@@ -1,4 +1,5 @@
 package storage;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -23,7 +24,8 @@ public class Storage {
 
     /**
      * Constructs a Storage object with the specified directory and file.
-     * @param dataDir The directory where the data file is stored.
+     * 
+     * @param dataDir  The directory where the data file is stored.
      * @param dataFile The path to the data file.
      */
     public Storage(String dataDir, String dataFile) {
@@ -33,6 +35,7 @@ public class Storage {
 
     /**
      * Saves the list of tasks to the data file.
+     * 
      * @param tasks The list of tasks to save.
      */
     public void saveTasks(ArrayList<Task> tasks) {
@@ -54,6 +57,7 @@ public class Storage {
 
     /**
      * Loads tasks from the data file into the provided list.
+     * 
      * @param tasks The list to load tasks into.
      */
     public void loadTasks(ArrayList<Task> tasks) {
@@ -82,6 +86,7 @@ public class Storage {
 
     /**
      * Converts a Task object to a string suitable for saving to file.
+     * 
      * @param t The task to convert.
      * @return The string representation of the task for file storage.
      */
@@ -93,39 +98,47 @@ public class Storage {
         } else if (t instanceof Deadline) {
             return String.join(" | ", type, done, t.getDescription(), ((Deadline) t).getBy().toString());
         } else if (t instanceof Event) {
-            return String.join(" | ", type, done, t.getDescription(), ((Event) t).getFrom() + " to " + ((Event) t).getTo());
+            return String.join(" | ", type, done, t.getDescription(),
+                    ((Event) t).getFrom() + " to " + ((Event) t).getTo());
         }
         return "";
     }
 
     /**
      * Parses a line from the data file into a Task object.
+     * 
      * @param line The line to parse.
      * @return The Task object, or null if the line is invalid.
      */
     private static Task parseTask(String line) {
         String[] parts = line.split(" \\| ");
-        if (parts.length < 3) return null;
+        if (parts.length < 3)
+            return null;
         String type = parts[0];
         boolean isDone = parts[1].equals("1");
         String desc = parts[2];
         switch (type) {
             case "T":
                 Task t = new Todo(desc);
-                if (isDone) t.markAsDone();
+                if (isDone)
+                    t.markAsDone();
                 return t;
             case "D":
-                if (parts.length < 4) return null;
+                if (parts.length < 4)
+                    return null;
                 Task d = new Deadline(desc, parts[3]);
-                if (isDone) d.markAsDone();
+                if (isDone)
+                    d.markAsDone();
                 return d;
             case "E":
-                if (parts.length < 4) return null;
+                if (parts.length < 4)
+                    return null;
                 String[] fromTo = parts[3].split(" to ", 2);
                 String from = fromTo.length > 0 ? fromTo[0] : "";
                 String to = fromTo.length > 1 ? fromTo[1] : "";
                 Task e = new Event(desc, from, to);
-                if (isDone) e.markAsDone();
+                if (isDone)
+                    e.markAsDone();
                 return e;
             default:
                 return null;
