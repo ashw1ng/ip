@@ -1,5 +1,3 @@
-
-
 public class UrMum {
     private static final String DATA_DIR = "data";
     private static final String DATA_FILE = "data/urMum.txt";
@@ -15,13 +13,16 @@ public class UrMum {
         while (true) {
             String input = ui.readCommand();
             try {
-                if (input.equals("bye")) {
+                String command = Parser.getCommand(input);
+                String arguments = Parser.getArguments(input);
+
+                if (command.equals("bye")) {
                     ui.showGoodbye();
                     break;
-                } else if (input.equals("list")) {
+                } else if (command.equals("list")) {
                     ui.showTaskList(tasks);
-                } else if (input.startsWith("mark ")) {
-                    int idx = Integer.parseInt(input.substring(5)) - 1;
+                } else if (command.equals("mark")) {
+                    int idx = Integer.parseInt(arguments) - 1;
                     if (idx >= 0 && idx < tasks.size()) {
                         tasks.getTask(idx).markAsDone();
                         System.out.println(" Nice! I've marked this task as done:");
@@ -30,8 +31,8 @@ public class UrMum {
                     } else {
                         throw new UrmumException("That task number doesn't exist. Please try again.");
                     }
-                } else if (input.startsWith("unmark ")) {
-                    int idx = Integer.parseInt(input.substring(7)) - 1;
+                } else if (command.equals("unmark")) {
+                    int idx = Integer.parseInt(arguments) - 1;
                     if (idx >= 0 && idx < tasks.size()) {
                         tasks.getTask(idx).markAsNotDone();
                         System.out.println(" OK, I've marked this task as not done yet:");
@@ -40,8 +41,8 @@ public class UrMum {
                     } else {
                         throw new UrmumException("That task number doesn't exist. Please try again.");
                     }
-                } else if (input.startsWith("delete ")) {
-                    int idx = Integer.parseInt(input.substring(7).trim()) - 1;
+                } else if (command.equals("delete")) {
+                    int idx = Integer.parseInt(arguments) - 1;
                     if (idx >= 0 && idx < tasks.size()) {
                         Task removed = tasks.getTask(idx);
                         tasks.removeTask(idx);
@@ -52,8 +53,8 @@ public class UrMum {
                     } else {
                         throw new UrmumException("That task number doesn't exist. Please try again.");
                     }
-                } else if (input.startsWith("todo ")) {
-                    String desc = input.length() > 4 ? input.substring(5).trim() : "";
+                } else if (command.equals("todo")) {
+                    String desc = arguments.trim();
                     if (desc.isEmpty()) {
                         throw new UrmumException("Oops! You need to provide a description for a todo.");
                     }
@@ -62,8 +63,8 @@ public class UrMum {
                     System.out.println("   " + tasks.getTask(tasks.size() - 1));
                     System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                     storage.saveTasks(tasks.getTasks());
-                } else if (input.startsWith("deadline ")) {
-                    String[] parts = input.substring(9).split(" /by ", 2);
+                } else if (command.equals("deadline")) {
+                    String[] parts = arguments.split(" /by ", 2);
                     String desc = parts[0].trim();
                     String by = parts.length > 1 ? parts[1].trim() : "";
                     if (desc.isEmpty()) {
@@ -81,8 +82,8 @@ public class UrMum {
                     } catch (Exception e) {
                         throw new UrmumException("Please enter the date and time in yyyy-MM-dd HHmm format, e.g., 2019-12-02 1800");
                     }
-                } else if (input.startsWith("event ")) {
-                    String[] parts = input.substring(5).split(" /from ", 2);
+                } else if (command.equals("event")) {
+                    String[] parts = arguments.split(" /from ", 2);
                     String desc = parts[0].trim();
                     String from = "";
                     String to = "";
