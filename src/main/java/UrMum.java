@@ -15,10 +15,11 @@ import ui.Ui;
 public class UrMum {
     private static final String DATA_DIR = "data";
     private static final String DATA_FILE = "data/urMum.txt";
-    
+
     /**
      * Entry point for the chatbot application.
      * Initializes UI, storage, and task list, then runs the main command loop.
+     * 
      * @param args Command-line arguments (not used)
      */
     public static void main(String[] args) {
@@ -109,7 +110,8 @@ public class UrMum {
                             System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                             storage.saveTasks(tasks.getTasks());
                         } catch (Exception e) {
-                            throw new UrmumException("Please enter the date and time in yyyy-MM-dd HHmm format, e.g., 2019-12-02 1800");
+                            throw new UrmumException(
+                                    "Please enter the date and time in yyyy-MM-dd HHmm format, e.g., 2019-12-02 1800");
                         }
                         break;
                     }
@@ -136,6 +138,22 @@ public class UrMum {
                         System.out.println("   " + tasks.getTask(tasks.size() - 1));
                         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                         storage.saveTasks(tasks.getTasks());
+                        break;
+                    }
+                    case "find": {
+                        String keyword = arguments.trim();
+                        if (keyword.isEmpty()) {
+                            throw new UrmumException("Please provide a keyword to search for.");
+                        }
+                        TaskList matches = tasks.findTasks(keyword);
+                        System.out.println(" Here are the matching tasks in your list:");
+                        if (matches.size() == 0) {
+                            System.out.println(" No matching tasks found.");
+                        } else {
+                            for (int i = 0; i < matches.size(); i++) {
+                                System.out.println(" " + (i + 1) + "." + matches.getTask(i));
+                            }
+                        }
                         break;
                     }
                     default:
