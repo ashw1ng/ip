@@ -1,32 +1,25 @@
-import java.util.Scanner;
-import java.util.ArrayList;
+
 
 public class UrMum {
     private static final String DATA_DIR = "data";
     private static final String DATA_FILE = "data/urMum.txt";
     
     public static void main(String[] args) {
-        String welcome = " Hello! I'm UrMum\n What can I do for you?";
-        String goodbye = " Bye. Hope to see you again soon!";
+        Ui ui = new Ui();
+        ui.showWelcome();
 
-        System.out.println(welcome);
-
-        Scanner scanner = new Scanner(System.in);
         TaskList tasks = new TaskList();
         Storage storage = new Storage(DATA_DIR, DATA_FILE);
         storage.loadTasks(tasks.getTasks());
 
         while (true) {
-            String input = scanner.nextLine();
+            String input = ui.readCommand();
             try {
                 if (input.equals("bye")) {
-                    System.out.println(goodbye);
+                    ui.showGoodbye();
                     break;
                 } else if (input.equals("list")) {
-                    System.out.println(" Here are the tasks in your list:");
-                    for (int i = 0; i < tasks.size(); i++) {
-                        System.out.println(" " + (i + 1) + "." + tasks.getTask(i));
-                    }
+                    ui.showTaskList(tasks);
                 } else if (input.startsWith("mark ")) {
                     int idx = Integer.parseInt(input.substring(5)) - 1;
                     if (idx >= 0 && idx < tasks.size()) {
@@ -115,11 +108,11 @@ public class UrMum {
                     throw new UrmumException("Sorry, I don't know what that means. Try another command!");
                 }
             } catch (UrmumException e) {
-                System.out.println(e.getMessage());
+                ui.showError(e.getMessage());
             } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid task number.");
+                ui.showError("Please enter a valid task number.");
             }
         }
-        scanner.close();
+        ui.close();
     }
 }
