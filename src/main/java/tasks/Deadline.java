@@ -1,13 +1,19 @@
+package tasks;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-class Deadline extends Task {
+public class Deadline extends Task {
     protected LocalDateTime by;
 
     public Deadline(String description, String by) {
         super(description);
         // Expects format: yyyy-MM-dd HHmm (e.g., 2019-12-02 1800)
         this.by = LocalDateTime.parse(by, DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
+    }
+
+    public LocalDateTime getBy() {
+        return this.by;
     }
 
     @Override

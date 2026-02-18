@@ -1,3 +1,4 @@
+package ui;
 public class Parser {
     /**
      * Returns the command word (first word) from the user input.

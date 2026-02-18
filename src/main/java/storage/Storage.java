@@ -1,3 +1,4 @@
+package storage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -7,6 +8,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Task;
+import tasks.Todo;
 
 
 public class Storage {
@@ -61,13 +67,13 @@ public class Storage {
 
     private static String taskToFileString(Task t) {
         String type = t instanceof Todo ? "T" : t instanceof Deadline ? "D" : t instanceof Event ? "E" : "?";
-        String done = t.isDone ? "1" : "0";
+        String done = t.isDone() ? "1" : "0";
         if (t instanceof Todo) {
-            return String.join(" | ", type, done, t.description);
+            return String.join(" | ", type, done, t.getDescription());
         } else if (t instanceof Deadline) {
-            return String.join(" | ", type, done, t.description, ((Deadline) t).by.toString());
+            return String.join(" | ", type, done, t.getDescription(), ((Deadline) t).getBy().toString());
         } else if (t instanceof Event) {
-            return String.join(" | ", type, done, t.description, ((Event) t).from + " to " + ((Event) t).to);
+            return String.join(" | ", type, done, t.getDescription(), ((Event) t).getFrom() + " to " + ((Event) t).getTo());
         }
         return "";
     }

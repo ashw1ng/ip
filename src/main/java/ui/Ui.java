@@ -1,4 +1,7 @@
+package ui;
 import java.util.Scanner;
+
+import tasks.TaskList;
 
 public class Ui {
     private Scanner scanner;
@@ -20,7 +23,7 @@ public class Ui {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
-     public void showError(String message) {
+    public void showError(String message) {
         System.out.println(message);
     }
 
