@@ -28,12 +28,13 @@ test {
 }
 
 application {
-    mainClass.set("seedu.duke.Duke")
+    mainClass.set("UrMum")
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "urmum"
     archiveClassifier = null
+    archiveFileName = 'urmum.jar'
 }
 
 run{
