@@ -14,16 +14,27 @@ import tasks.Event;
 import tasks.Task;
 import tasks.Todo;
 
-
+/**
+ * Handles loading and saving tasks to and from the hard disk.
+ */
 public class Storage {
     private final String dataDir;
     private final String dataFile;
 
+    /**
+     * Constructs a Storage object with the specified directory and file.
+     * @param dataDir The directory where the data file is stored.
+     * @param dataFile The path to the data file.
+     */
     public Storage(String dataDir, String dataFile) {
         this.dataDir = dataDir;
         this.dataFile = dataFile;
     }
 
+    /**
+     * Saves the list of tasks to the data file.
+     * @param tasks The list of tasks to save.
+     */
     public void saveTasks(ArrayList<Task> tasks) {
         try {
             Path dirPath = Paths.get(dataDir);
@@ -41,6 +52,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the data file into the provided list.
+     * @param tasks The list to load tasks into.
+     */
     public void loadTasks(ArrayList<Task> tasks) {
         Path filePath = Paths.get(dataFile);
         if (!Files.exists(filePath)) {
@@ -65,6 +80,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Converts a Task object to a string suitable for saving to file.
+     * @param t The task to convert.
+     * @return The string representation of the task for file storage.
+     */
     private static String taskToFileString(Task t) {
         String type = t instanceof Todo ? "T" : t instanceof Deadline ? "D" : t instanceof Event ? "E" : "?";
         String done = t.isDone() ? "1" : "0";
@@ -78,6 +98,11 @@ public class Storage {
         return "";
     }
 
+    /**
+     * Parses a line from the data file into a Task object.
+     * @param line The line to parse.
+     * @return The Task object, or null if the line is invalid.
+     */
     private static Task parseTask(String line) {
         String[] parts = line.split(" \\| ");
         if (parts.length < 3) return null;
@@ -106,5 +131,4 @@ public class Storage {
                 return null;
         }
     }
-
 }

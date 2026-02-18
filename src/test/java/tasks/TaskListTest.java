@@ -3,7 +3,13 @@ package tasks;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * JUnit tests for the TaskList class.
+ */
 public class TaskListTest {
+    /**
+     * Tests that adding a task increases the size of the TaskList.
+     */
     @Test
     public void addTask_increasesSize() {
         TaskList tasks = new TaskList();
@@ -12,6 +18,9 @@ public class TaskListTest {
         assertEquals(1, tasks.size());
     }
 
+    /**
+     * Tests that removing a task returns the correct task and decreases the size.
+     */
     @Test
     public void removeTask_returnsCorrectTaskAndDecreasesSize() {
         TaskList tasks = new TaskList();
@@ -22,6 +31,9 @@ public class TaskListTest {
         assertEquals(0, tasks.size());
     }
 
+    /**
+     * Tests that getting a task with an out-of-bounds index throws an exception.
+     */
     @Test
     public void getTask_outOfBounds_throwsException() {
         TaskList tasks = new TaskList();

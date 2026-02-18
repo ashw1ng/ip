@@ -1,4 +1,8 @@
 package ui;
+
+/**
+ * Parses user input into commands and arguments.
+ */
 public class Parser {
     /**
      * Returns the command word (first word) from the user input.
