@@ -54,8 +54,8 @@ public class UrMum {
                 } else if (command.equals("delete")) {
                     int idx = Integer.parseInt(arguments) - 1;
                     if (idx >= 0 && idx < tasks.size()) {
-                        Task removed = tasks.getTask(idx);
-                        tasks.removeTask(idx);
+                        Task removed = tasks.removeTask(idx);
+                        // tasks.removeTask(idx);
                         System.out.println(" Noted. I've removed this task:");
                         System.out.println("   " + removed);
                         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");

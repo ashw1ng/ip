@@ -17,8 +17,8 @@ public class TaskList {
         this.tasks.add(task);
     }
 
-    public void removeTask(int index) {
-        this.tasks.remove(index);
+    public Task removeTask(int index) {
+        return this.tasks.remove(index);
     }
 
     public Task getTask(int index) {
