@@ -9,6 +9,7 @@ public abstract class Task {
 
     /**
      * Constructs a Task with the given description.
+     * 
      * @param description The description of the task.
      */
     public Task(String description) {
@@ -18,6 +19,7 @@ public abstract class Task {
 
     /**
      * Returns whether the task is marked as done.
+     * 
      * @return True if the task is done, false otherwise.
      */
     public boolean isDone() {
@@ -26,6 +28,7 @@ public abstract class Task {
 
     /**
      * Returns the description of the task.
+     * 
      * @return The task description.
      */
     public String getDescription() {
@@ -34,6 +37,7 @@ public abstract class Task {
 
     /**
      * Returns the status icon representing whether the task is done.
+     * 
      * @return "X" if done, otherwise a space.
      */
     public String getStatusIcon() {
