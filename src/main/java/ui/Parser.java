@@ -13,7 +13,8 @@ public class Parser {
     }
 
     /**
-     * Returns the arguments (everything after the command word) from the user input.
+     * Returns the arguments (everything after the command word) from the user
+     * input.
      */
     public static String getArguments(String input) {
         String[] parts = input.trim().split(" ", 2);

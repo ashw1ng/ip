@@ -1,4 +1,5 @@
 package ui;
+
 import java.util.Scanner;
 
 import tasks.TaskList;
@@ -18,6 +19,7 @@ public class Ui {
 
     /**
      * Reads the next line of user input.
+     * 
      * @return The user's input as a String.
      */
     public String readCommand() {
@@ -41,6 +43,7 @@ public class Ui {
 
     /**
      * Displays an error message to the user.
+     * 
      * @param message The error message to display.
      */
     public void showError(String message) {
@@ -49,6 +52,7 @@ public class Ui {
 
     /**
      * Displays the current list of tasks to the user.
+     * 
      * @param tasks The TaskList containing the tasks to display.
      */
     public void showTaskList(TaskList tasks) {

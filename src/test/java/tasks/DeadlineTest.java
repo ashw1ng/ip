@@ -8,7 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class DeadlineTest {
     /**
-     * Tests that the toString method returns the correct formatted string for a deadline.
+     * Tests that the toString method returns the correct formatted string for a
+     * deadline.
      */
     @Test
     public void toString_correctFormat() {
@@ -18,7 +19,8 @@ public class DeadlineTest {
     }
 
     /**
-     * Tests that marking a deadline as done updates the string representation to show [X].
+     * Tests that marking a deadline as done updates the string representation to
+     * show [X].
      */
     @Test
     public void markAsDone_toStringShowsX() {
@@ -28,7 +30,8 @@ public class DeadlineTest {
     }
 
     /**
-     * Tests that constructing a Deadline with an invalid date format throws an exception.
+     * Tests that constructing a Deadline with an invalid date format throws an
+     * exception.
      */
     @Test
     public void invalidDateFormat_throwsException() {
