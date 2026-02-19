@@ -140,6 +140,22 @@ public class UrMum {
                         storage.saveTasks(tasks.getTasks());
                         break;
                     }
+                    case "find": {
+                        String keyword = arguments.trim();
+                        if (keyword.isEmpty()) {
+                            throw new UrmumException("Please provide a keyword to search for.");
+                        }
+                        TaskList matches = tasks.findTasks(keyword);
+                        System.out.println(" Here are the matching tasks in your list:");
+                        if (matches.size() == 0) {
+                            System.out.println(" No matching tasks found.");
+                        } else {
+                            for (int i = 0; i < matches.size(); i++) {
+                                System.out.println(" " + (i + 1) + "." + matches.getTask(i));
+                            }
+                        }
+                        break;
+                    }
                     default:
                         throw new UrmumException("Sorry, I don't know what that means. Try another command!");
                 }

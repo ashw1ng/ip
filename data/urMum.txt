@@ -2,3 +2,4 @@ T | 0 | read
 T | 0 | work
 T | 1 | ur mum
 T | 1 | thank someone special
+T | 0 | work hard
