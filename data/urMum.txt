@@ -2,4 +2,6 @@ T | 0 | read
 T | 0 | work
 T | 1 | ur mum
 T | 1 | thank someone special
-T | 0 | work hard
+T | 0 | work rly hard
+E | 0 | something | mon pm to 4pm
+D | 0 | finish ip | 2026-02-20 2359

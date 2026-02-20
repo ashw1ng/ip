@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import tasks.Deadline;
@@ -96,7 +97,8 @@ public class Storage {
         if (t instanceof Todo) {
             return String.join(" | ", type, done, t.getDescription());
         } else if (t instanceof Deadline) {
-            return String.join(" | ", type, done, t.getDescription(), ((Deadline) t).getBy().toString());
+            return String.join(" | ", type, done, t.getDescription(),
+                    ((Deadline) t).getBy().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm")));
         } else if (t instanceof Event) {
             return String.join(" | ", type, done, t.getDescription(),
                     ((Event) t).getFrom() + " to " + ((Event) t).getTo());
