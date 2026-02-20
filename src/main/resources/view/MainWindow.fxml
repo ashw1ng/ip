@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="view.MainWindow" prefHeight="600.0" prefWidth="400.0">
+<AnchorPane fx:id="rootPane" id="rootPane" xmlns:fx="http://javafx.com/fxml" fx:controller="view.MainWindow" prefHeight="600.0" prefWidth="400.0">
     <children>
         <ScrollPane fx:id="scrollPane" prefHeight="535.0" prefWidth="385.0" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" AnchorPane.topAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0">
             <content>

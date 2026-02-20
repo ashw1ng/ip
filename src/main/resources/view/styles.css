@@ -4,6 +4,11 @@
     -fx-padding: 10;
 }
 
+/* Root pane background */
+#rootPane {
+    -fx-background-color: #fff9d6; /* or any color you want */
+}
+
 /* Bot bubble */
 .bot-bubble {
     -fx-background-color: #b3e5fc;
