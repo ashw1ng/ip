@@ -1,0 +1,23 @@
+/* Chat area background */
+#dialogContainer {
+    -fx-background-color: #fff9d6;
+    -fx-padding: 10;
+}
+
+/* Bot bubble */
+.bot-bubble {
+    -fx-background-color: #b3e5fc;
+    -fx-background-radius: 15;
+    -fx-padding: 10 15 10 15;
+    -fx-font-size: 14px;
+    -fx-text-fill: #222;
+}
+
+/* User bubble */
+.user-bubble {
+    -fx-background-color: #ffe082;
+    -fx-background-radius: 15;
+    -fx-padding: 10 15 10 15;
+    -fx-font-size: 14px;
+    -fx-text-fill: #222;
+}

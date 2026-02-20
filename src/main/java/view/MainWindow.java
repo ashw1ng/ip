@@ -33,7 +33,7 @@ public class MainWindow {
 
     public void setBackend(UrMumBackend backend) {
         this.backend = backend;
-        dialogContainer.getChildren().add(createDialog(backend.getWelcome(), "/images/urmum.png", false));
+        dialogContainer.getChildren().add(DialogBox.getBotDialog(backend.getWelcome(), new Image("/images/urmum.png")));
     }
 
     @FXML
@@ -41,9 +41,9 @@ public class MainWindow {
         String input = userInput.getText();
         if (input.trim().isEmpty())
             return;
-        dialogContainer.getChildren().add(createDialog("You: " + input, "/images/user.png", true));
+        dialogContainer.getChildren().add(DialogBox.getUserDialog(input, new Image("/images/user.png")));
         String response = backend.getResponse(input);
-        dialogContainer.getChildren().add(createDialog("UrMum: " + response, "/images/urmum.png", false));
+        dialogContainer.getChildren().add(DialogBox.getBotDialog(response, new Image("/images/urmum.png")));
         userInput.clear();
 
         if (input.trim().equalsIgnoreCase("bye")) {

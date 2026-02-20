@@ -20,6 +20,7 @@ public class UrMumApp extends Application {
         controller.setBackend(backend);
 
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/view/styles.css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("UrMum Chatbot");
         stage.show();

@@ -7,7 +7,7 @@
     <children>
         <ScrollPane fx:id="scrollPane" prefHeight="535.0" prefWidth="385.0" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" AnchorPane.topAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0">
             <content>
-                <VBox fx:id="dialogContainer" spacing="10.0" prefWidth="385.0"/>
+                <VBox fx:id="dialogContainer" id="dialogContainer" spacing="10.0" prefWidth="385.0"/>
             </content>
         </ScrollPane>
         <TextField fx:id="userInput" layoutY="550.0" prefWidth="325.0" AnchorPane.leftAnchor="1.0" AnchorPane.bottomAnchor="1.0" onAction="#handleUserInput"/>
