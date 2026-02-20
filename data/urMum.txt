@@ -4,4 +4,4 @@ T | 1 | ur mum
 T | 1 | thank someone special
 T | 0 | work rly hard
 D | 0 | finish ip | 2026-02-20 2359
-E | 0 | final stretch | 2026-02-20T16:00 to 2026-02-20T23:00
+E | 0 | lock in | 2026-02-20 1800 to 2026-02-20 2200

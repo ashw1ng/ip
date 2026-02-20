@@ -94,14 +94,15 @@ public class Storage {
     private static String taskToFileString(Task t) {
         String type = t instanceof Todo ? "T" : t instanceof Deadline ? "D" : t instanceof Event ? "E" : "?";
         String done = t.isDone() ? "1" : "0";
+        DateTimeFormatter FILE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         if (t instanceof Todo) {
             return String.join(" | ", type, done, t.getDescription());
         } else if (t instanceof Deadline) {
             return String.join(" | ", type, done, t.getDescription(),
-                    ((Deadline) t).getBy().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm")));
+                    ((Deadline) t).getBy().format(FILE_FORMAT));
         } else if (t instanceof Event) {
             return String.join(" | ", type, done, t.getDescription(),
-                    ((Event) t).getFrom() + " to " + ((Event) t).getTo());
+                    ((Event) t).getFrom().format(FILE_FORMAT) + " to " + ((Event) t).getTo().format(FILE_FORMAT));
         }
         return "";
     }
@@ -136,9 +137,7 @@ public class Storage {
                 if (parts.length < 4)
                     return null;
                 String[] fromTo = parts[3].split(" to ", 2);
-                String from = fromTo.length > 0 ? fromTo[0] : "";
-                String to = fromTo.length > 1 ? fromTo[1] : "";
-                Task e = new Event(desc, from, to);
+                Task e = new Event(desc, fromTo[0], fromTo[1]);
                 if (isDone)
                     e.markAsDone();
                 return e;
