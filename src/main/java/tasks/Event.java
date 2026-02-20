@@ -14,8 +14,10 @@ public class Event extends Task {
 
     public Event(String description, String from, String to) {
         super(description);
+        assert from != null && to != null : "Event times should not be null";
         this.from = LocalDateTime.parse(from, FILE_FORMAT);
         this.to = LocalDateTime.parse(to, FILE_FORMAT);
+        assert !this.from.isAfter(this.to) : "Event start time should not be after end time";
     }
 
     public LocalDateTime getFrom() {

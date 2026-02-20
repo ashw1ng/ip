@@ -11,6 +11,8 @@ public class Deadline extends Task {
 
     public Deadline(String description, String by) {
         super(description);
+        assert description != null : "Description should not be null";
+        assert by != null : "Deadline date/time should not be null";
         // Expects format: yyyy-MM-dd HHmm (e.g., 2019-12-02 1800)
         this.by = LocalDateTime.parse(by, DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
     }
