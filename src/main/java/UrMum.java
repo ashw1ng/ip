@@ -46,6 +46,7 @@ public class UrMum {
                         break;
                     case "mark": {
                         int idx = Integer.parseInt(arguments) - 1;
+                        assert idx >= 0 && idx < tasks.size() : "Mark index out of bounds";
                         if (idx >= 0 && idx < tasks.size()) {
                             tasks.getTask(idx).markAsDone();
                             System.out.println(" Nice! I've marked this task as done:");
