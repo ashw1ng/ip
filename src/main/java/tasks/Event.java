@@ -1,28 +1,34 @@
 package tasks;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Represents an event task with a start and end time.
  */
 public class Event extends Task {
-    protected String from;
-    protected String to;
+    protected LocalDateTime from;
+    protected LocalDateTime to;
+    private static final DateTimeFormatter FILE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private static final DateTimeFormatter DISPLAY_FORMAT = DateTimeFormatter.ofPattern("MMM d yyyy h:mma");
 
     public Event(String description, String from, String to) {
         super(description);
-        this.from = from;
-        this.to = to;
+        this.from = LocalDateTime.parse(from, FILE_FORMAT);
+        this.to = LocalDateTime.parse(to, FILE_FORMAT);
     }
 
-    public String getFrom() {
+    public LocalDateTime getFrom() {
         return this.from;
     }
 
-    public String getTo() {
+    public LocalDateTime getTo() {
         return this.to;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + getFrom() + " to: " + getTo() + ")";
+        return "[E]" + super.toString() + " (from: " + from.format(DISPLAY_FORMAT)
+                + " to: " + to.format(DISPLAY_FORMAT) + ")";
     }
 }

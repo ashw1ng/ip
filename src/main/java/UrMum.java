@@ -133,11 +133,16 @@ public class UrMum {
                         if (from.isEmpty() || to.isEmpty()) {
                             throw new UrmumException("Please specify both /from and /to times for the event.");
                         }
-                        tasks.addTask(new Event(desc, from, to));
-                        System.out.println(" Got it. I've added this task:");
-                        System.out.println("   " + tasks.getTask(tasks.size() - 1));
-                        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                        storage.saveTasks(tasks.getTasks());
+                        try {
+                            tasks.addTask(new Event(desc, from, to));
+                            System.out.println(" Got it. I've added this task:");
+                            System.out.println("   " + tasks.getTask(tasks.size() - 1));
+                            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                            storage.saveTasks(tasks.getTasks());
+                        } catch (Exception e) {
+                            throw new UrmumException(
+                                    "Please enter the date and time in yyyy-MM-dd HHmm format, e.g., 2026-02-20 1800");
+                        }
                         break;
                     }
                     case "find": {
