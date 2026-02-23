@@ -1,12 +1,8 @@
 package view;
 
-import tasks.TaskList;
-import tasks.Task;
-import tasks.Todo;
-import tasks.Deadline;
-import tasks.Event;
 import storage.Storage;
-import ui.Parser;
+import tasks.*;
+import exceptions.UrmumException;
 
 /**
  * Backend wrapper for the UrMum chatbot logic, for use with the GUI.
@@ -33,8 +29,9 @@ public class UrMumBackend {
      */
     public String getResponse(String input) {
         try {
-            String command = Parser.getCommand(input);
-            String arguments = Parser.getArguments(input);
+            String command = ui.Parser.getCommand(input);
+            String arguments = ui.Parser.getArguments(input);
+
             switch (command) {
                 case "bye":
                     return "Bye. Hope to see you again soon!";
@@ -42,34 +39,23 @@ public class UrMumBackend {
                     return getTaskListString();
                 case "mark": {
                     int idx = Integer.parseInt(arguments) - 1;
-                    if (idx >= 0 && idx < tasks.size()) {
-                        tasks.getTask(idx).markAsDone();
-                        storage.saveTasks(tasks.getTasks());
-                        return "Nice! I've marked this task as done:\n" + tasks.getTask(idx);
-                    } else {
-                        return "That task number doesn't exist. Please try again.";
-                    }
+                    assert idx >= 0 && idx < tasks.size() : "Mark index out of bounds";
+                    tasks.getTask(idx).markAsDone();
+                    storage.saveTasks(tasks.getTasks());
+                    return "Nice! I've marked this task as done:\n" + tasks.getTask(idx);
                 }
                 case "unmark": {
                     int idx = Integer.parseInt(arguments) - 1;
-                    if (idx >= 0 && idx < tasks.size()) {
-                        tasks.getTask(idx).markAsNotDone();
-                        storage.saveTasks(tasks.getTasks());
-                        return "OK, I've marked this task as not done yet:\n" + tasks.getTask(idx);
-                    } else {
-                        return "That task number doesn't exist. Please try again.";
-                    }
+                    tasks.getTask(idx).markAsNotDone();
+                    storage.saveTasks(tasks.getTasks());
+                    return "OK, I've marked this task as not done yet:\n" + tasks.getTask(idx);
                 }
                 case "delete": {
                     int idx = Integer.parseInt(arguments) - 1;
-                    if (idx >= 0 && idx < tasks.size()) {
-                        Task removed = tasks.removeTask(idx);
-                        storage.saveTasks(tasks.getTasks());
-                        return "Noted. I've removed this task:\n" + removed +
-                                "\nNow you have " + tasks.size() + " tasks in the list.";
-                    } else {
-                        return "That task number doesn't exist. Please try again.";
-                    }
+                    Task removed = tasks.removeTask(idx);
+                    storage.saveTasks(tasks.getTasks());
+                    return "Noted. I've removed this task:\n" + removed +
+                            "\nNow you have " + tasks.size() + " tasks in the list.";
                 }
                 case "todo": {
                     String desc = arguments.trim();
@@ -118,10 +104,14 @@ public class UrMumBackend {
                     if (from.isEmpty() || to.isEmpty()) {
                         return "Please specify both /from and /to times for the event.";
                     }
-                    tasks.addTask(new Event(desc, from, to));
-                    storage.saveTasks(tasks.getTasks());
-                    return "Got it. I've added this task:\n" + tasks.getTask(tasks.size() - 1) +
-                            "\nNow you have " + tasks.size() + " tasks in the list.";
+                    try {
+                        tasks.addTask(new Event(desc, from, to));
+                        storage.saveTasks(tasks.getTasks());
+                        return "Got it. I've added this task:\n" + tasks.getTask(tasks.size() - 1) +
+                                "\nNow you have " + tasks.size() + " tasks in the list.";
+                    } catch (Exception e) {
+                        return "Please enter the date and time in yyyy-MM-dd HHmm format, e.g., 2026-02-20 1800";
+                    }
                 }
                 case "find": {
                     String keyword = arguments.trim();
@@ -142,8 +132,8 @@ public class UrMumBackend {
                 default:
                     return "Sorry, I don't know what that means. Try another command!";
             }
-        } catch (Exception e) {
-            return e.getMessage();
+        } catch (NumberFormatException e) {
+            return "Please enter a valid task number.";
         }
     }
 
