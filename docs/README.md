@@ -11,13 +11,7 @@ You can use UrMum to keep track of todos, deadlines, and events from the command
 2. Type commands into the app.
 3. Use bye to exit.
 
-Example: `keyword (optional arguments)`
-
-// A description of the expected outcome goes here
-
-```
-expected output
-```
+Tasks are automatically saved to `./data/six.txt`.
 
 ---
 
@@ -63,7 +57,11 @@ event project meeting /from 2026-03-02 1400 /to 2026-03-02 1600
 
 See all your current tasks.
 
-Format: `list`
+Format:
+
+```
+bye
+```
 
 ### Mark/Unmark a Task as Done/Not Done
 
@@ -108,13 +106,21 @@ find book
 
 Undo your most recent add, delete, mark, or unmark command.
 
-Format: `undo`
+Format:
+
+```
+undo
+```
 
 ### Exit the Chatbot
 
 Say goodbye and close UrMum.
 
-Format: `bye`
+Format:
+
+```
+bye
+```
 
 ---
 
@@ -129,4 +135,4 @@ Format: `bye`
 
 ---
 
-Enjoy using UrMum to organize your life
+Enjoy using UrMum to organize your life!
