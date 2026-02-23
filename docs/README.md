@@ -3,6 +3,8 @@
 This is UrMum, your friendly personal task manager chatbot!
 You can use UrMum to keep track of todos, deadlines, and events from the command line.
 
+---
+
 ## Getting Started
 
 1. Run the jar file.
@@ -17,94 +19,104 @@ Example: `keyword (optional arguments)`
 expected output
 ```
 
+---
+
 ## Features & Commands
 
 ### Add a Todo
 
 Add a simple task with no date/time.
 
-Format: 'todo <description>'
+Format: `todo <description>`
 
 Example:
-'''
+
+```
 todo read book
-'''
+```
 
 ### Add a Deadline
 
 Add a task that must be done by a specific date/time.
 
-Format: 'deadline <description> /by <yyyy-MM-dd HHmm>'
+Format: `deadline <description> /by <yyyy-MM-dd HHmm>`
 
 Example:
-'''
+
+```
 deadline submit report /by 2026-03-01 2359
-'''
+```
 
 ### Add an Event
 
 Add a task that occurs during a specific period.
 
-Format: 'event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>'
+Format: `event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>`
 
 Example:
-'''
+
+```
 event project meeting /from 2026-03-02 1400 /to 2026-03-02 1600
-'''
+```
 
 ### List All Tasks
 
 See all your current tasks.
 
-Format: 'list'
+Format: `list`
 
 ### Mark/Unmark a Task as Done/Not Done
 
 Add a simple task with no date/time.
 
-Mark a task as done: 'mark <task number>'
+Mark a task as done: `mark <task number>`
 
-Unmark a task: 'unmark <task number>'
+Unmark a task: `unmark <task number>`
 
 Example:
-'''
+
+```
 mark 2
 unmark 2
-'''
+```
 
 ### Delete a Task
 
 Remove a task from your list.
 
-Format: 'delete <task number>'
+Format: `delete <task number>`
 
 Example:
-'''
+
+```
 delete 3
-'''
+```
 
 ### Find Tasks by Keyword
 
 Search for tasks containing a keyword.
 
-Format: 'find <keyword>'
+Format: `find <keyword>`
 
 Example:
-'''
+
+```
 find book
-'''
+```
 
 ### Undo Last Change
 
 Undo your most recent add, delete, mark, or unmark command.
 
-Format: 'undo'
+Format: `undo`
 
 ### Exit the Chatbot
 
 Say goodbye and close UrMum.
 
-Format: 'bye'
+Format: `bye`
+
+---
 
 ## Error Handling Notes
 
@@ -115,6 +127,6 @@ Format: 'bye'
 - If you try to undo when there is nothing to undo, UrMum will let you know.
 - All errors are explained clearly so you can fix your input and try again.
 
-##
+---
 
 Enjoy using UrMum to organize your life
