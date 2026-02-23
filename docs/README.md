@@ -11,7 +11,7 @@ You can use UrMum to keep track of todos, deadlines, and events from the command
 2. Type commands into the app.
 3. Use bye to exit.
 
-Tasks are automatically saved to `./data/six.txt`.
+Tasks are automatically saved to `./data/urMum.txt`.
 
 ---
 
