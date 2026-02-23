@@ -1,5 +1,7 @@
 package view;
 
+import exceptions.UrmumException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -39,8 +41,14 @@ public class MainWindow {
         if (input.trim().isEmpty())
             return;
         dialogContainer.getChildren().add(DialogBox.getUserDialog(input, new Image("/images/user.png")));
-        String response = backend.getResponse(input);
-        dialogContainer.getChildren().add(DialogBox.getBotDialog(response, new Image("/images/urmum.png")));
+        try {
+            String response = backend.getResponse(input);
+            dialogContainer.getChildren().add(DialogBox.getBotDialog(response, new Image("/images/urmum.png")));
+        } catch (UrmumException e) {
+
+            dialogContainer.getChildren().add(
+                    DialogBox.getBotDialog(e.getMessage(), new Image("/images/urmum.png")));
+        }
         userInput.clear();
 
         if (input.trim().equalsIgnoreCase("bye")) {
