@@ -26,4 +26,9 @@ public class Deadline extends Task {
         // Display as: Dec 2 2019 6:00PM
         return "[D]" + super.toString() + " (by: " + by.format(DateTimeFormatter.ofPattern("MMM d yyyy h:mma")) + ")";
     }
+
+    @Override
+    public Task clone() {
+        return new Deadline(this.getDescription(), this.getBy().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm")));
+    }
 }

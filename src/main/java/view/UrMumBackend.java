@@ -1,8 +1,14 @@
 package view;
 
 import storage.Storage;
-import tasks.*;
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Task;
+import tasks.TaskList;
+import tasks.Todo;
 import exceptions.UrmumException;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 /**
  * Backend wrapper for the UrMum chatbot logic, for use with the GUI.
@@ -10,6 +16,7 @@ import exceptions.UrmumException;
 public class UrMumBackend {
     private TaskList tasks;
     private Storage storage;
+    private Deque<TaskList> undoStack = new ArrayDeque<>();
 
     public UrMumBackend() {
         tasks = new TaskList();
@@ -31,6 +38,30 @@ public class UrMumBackend {
     public String getResponse(String input) throws UrmumException {
         String command = ui.Parser.getCommand(input);
         String arguments = ui.Parser.getArguments(input);
+
+        if (command.equals("undo")) {
+            if (undoStack.isEmpty()) {
+                return "Nothing to undo!";
+            }
+            tasks = undoStack.pop();
+            storage.saveTasks(tasks.getTasks());
+            return "Undid the last command.";
+        }
+
+        // For commands that modify tasks, save state before changing
+        switch (command) {
+            case "mark":
+            case "unmark":
+            case "delete":
+            case "todo":
+            case "deadline":
+            case "event":
+                saveStateForUndo();
+                break;
+            default:
+                break;
+        }
+
         switch (command) {
             case "bye": {
                 return "Bye. Hope to see you again soon!";
@@ -158,6 +189,11 @@ public class UrMumBackend {
             default:
                 throw new UrmumException("Sorry, I don't know what that means. Try another command!");
         }
+    }
+
+    private void saveStateForUndo() {
+        // Deep copy the task list (assumes TaskList has a copy constructor)
+        undoStack.push(new TaskList(tasks));
     }
 
     private String getTaskListString() {

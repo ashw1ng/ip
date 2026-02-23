@@ -25,6 +25,18 @@ public class TaskList {
     }
 
     /**
+     * Constructs a TaskList by copying another TaskList.
+     * 
+     * @param other The TaskList to copy.
+     */
+    public TaskList(TaskList other) {
+        this.tasks = new ArrayList<>();
+        for (Task t : other.tasks) {
+            this.tasks.add(t.clone()); // Ensure Task implements clone() or deep copy
+        }
+    }
+
+    /**
      * Adds a task to the list.
      * 
      * @param task The task to add.

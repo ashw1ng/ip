@@ -3,7 +3,7 @@ package tasks;
 /**
  * Abstract base class for all types of tasks.
  */
-public abstract class Task {
+public abstract class Task implements Cloneable {
     protected String description;
     protected boolean isDone;
 
@@ -62,4 +62,7 @@ public abstract class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }
+
+    @Override
+    public abstract Task clone();
 }

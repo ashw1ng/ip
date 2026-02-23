@@ -33,4 +33,11 @@ public class Event extends Task {
         return "[E]" + super.toString() + " (from: " + from.format(DISPLAY_FORMAT)
                 + " to: " + to.format(DISPLAY_FORMAT) + ")";
     }
+
+    @Override
+    public Task clone() {
+        return new Event(this.getDescription(),
+                this.getFrom().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm")),
+                this.getTo().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm")));
+    }
 }
